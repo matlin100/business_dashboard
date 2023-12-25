@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@mui/styles';
 import {
   Grid,
   Card,
@@ -20,29 +19,27 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DescriptionIcon from '@mui/icons-material/Description';
 
-const useStyles = makeStyles((theme) => ({
-  highlighted: {
-    backgroundColor: 'rgba(0, 0, 255, 0.2)', // Adjust the blue overlay as needed
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1),
-    margin: theme.spacing(1, 0)
-  }
-}));
-
 const UserData = ({ user, isLoading }) => {
-  const classes = useStyles();
   const [expandedSections, setExpandedSections] = React.useState({});
 
   const handleExpandClick = (section) => {
     setExpandedSections({ ...expandedSections, [section]: !expandedSections[section] });
   };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (!user) {
     return <div>No user data available</div>;
   }
 
+  const highlightedStyle = {
+    bgcolor: expandedSections['tags'] || expandedSections['communication'] || expandedSections['recommendations'] ? 'rgba(0, 0, 255, 0.2)' : 'inherit',
+    borderRadius: 1,
+    p: 1,
+    m: 1,
+  };
 
   return (
     <Grid container spacing={2}>
@@ -84,7 +81,7 @@ const UserData = ({ user, isLoading }) => {
 
       {/* Tags */}
       <Grid item xs={6}>
-      <Card className={expandedSections['tags'] ? classes.highlighted : ''}>
+      <Card sx={expandedSections['tags'] ? highlightedStyle : undefined}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               Tags
@@ -106,7 +103,7 @@ const UserData = ({ user, isLoading }) => {
 
       {/* Communication */}
       <Grid item xs={6}>
-      <Card className={expandedSections['communication'] ? classes.highlighted : ''}>
+      <Card sx={expandedSections['communication'] ? highlightedStyle : undefined}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               Communication
@@ -129,7 +126,7 @@ const UserData = ({ user, isLoading }) => {
       </Grid>
          {/* Recommendations */}
          <Grid item xs={12}>
-         <Card className={expandedSections['recommendations'] ? classes.highlighted : ''}>
+         <Card sx={expandedSections['recommendations'] ? highlightedStyle : undefined}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               Recommendations
