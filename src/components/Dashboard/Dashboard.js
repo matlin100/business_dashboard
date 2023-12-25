@@ -3,6 +3,7 @@ import { Container, Typography } from '@mui/material';
 import Settings from '../Settings/Settings'; // Adjust the path as necessary
 import Graphs from '../Graphs/Graphs';   // Adjust the path as necessary
 import UserData from '../Data/Data';       // Adjust the path as necessary
+import UserCards from '../Data/UserCards'
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
@@ -54,6 +55,11 @@ function Dashboard({ userLoggedIn }) {
       <section>
         <Typography variant="h4" gutterBottom>Graphs</Typography>
         <Graphs customerDetails={userData?.customerDetails} isLoading={isLoading} />
+      </section>
+
+      <section>
+        <Typography variant="h4" gutterBottom>User Details</Typography>
+        <UserCards customerDetails={userData?.customerDetails} />
       </section>
 
       {/* Data Component */}
