@@ -1,12 +1,12 @@
-import {React, useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
 import Settings from '../Settings/Settings'; // Adjust the path as necessary
 import Graphs from '../Graphs/Graphs';   // Adjust the path as necessary
 import UserData from '../Data/Data';       // Adjust the path as necessary
-import Sidebar from './sidmar';
+import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
-import userAPI from '../../api/userAPI'
+import userAPI from '../../api/userAPI';
 
 function Dashboard({ userLoggedIn }) {
   const [userData, setUserData] = useState(null);
@@ -37,31 +37,31 @@ function Dashboard({ userLoggedIn }) {
   }, [userLoggedIn]);
 
   return (
-    
     <Container maxWidth="lg">
-       <Header />  
-       <Sidebar />
+      <Header />
+      <Sidebar />
       <Typography variant="h3" gutterBottom>
         Dashboard
       </Typography>
         
-      {/* Integrating Settings Component */}
+      {/* Settings Component */}
       <section>
         <Typography variant="h4" gutterBottom>Settings</Typography>
         <Settings />
       </section>
 
-      {/* Integrating Graphs Component */}
+      {/* Graphs Component */}
       <section>
         <Typography variant="h4" gutterBottom>Graphs</Typography>
-        <Graphs />
+        <Graphs customerDetails={userData?.customerDetails} isLoading={isLoading} />
       </section>
 
-      {/* Integrating Data Component */}
+      {/* Data Component */}
       <section>
         <Typography variant="h4" gutterBottom>Data</Typography>
         <UserData user={userData?.user} isLoading={isLoading} />
       </section>
+
       <Footer />
     </Container>
   );
