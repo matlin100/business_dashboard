@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Grid,
@@ -15,12 +15,33 @@ import CommunicationForm from './CommunicationForm';
 import userAPI from '../../api/userAPI';
 
 const UserSettings = ({ user, isLoading }) => {
+  const [updateFailed, setUpdateFailed] = useState(false); // State to track update failure
   const [userData, setUserData] = useState({
-    // ...
+    name: '',
+    password: '',
+    email: '',
+    url: '',
+    description: '',
+    logo: '',
+    phone: '',
+    website: '',
+    tags: [],
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+    },
+    summary: {
+      satisfaction: 0,
+      importance: 0, // Initialize importance with a default value
+      subject: '',
+      category: '',
+      content: '',
+    },
   });
 
   const [changedData, setChangedData] = useState({});
-  const [updateFailed, setUpdateFailed] = useState(false); // State to track update failure
 
   const setAllFields = (field, value) => {
     // Update the userData state
@@ -37,6 +58,7 @@ const UserSettings = ({ user, isLoading }) => {
   };
 
   const handleSubmit = async (e) => {
+    setUpdateFailed(true);
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
@@ -45,23 +67,12 @@ const UserSettings = ({ user, isLoading }) => {
         return;
       }
       const data = await userAPI.updateUser(token, changedData); // Send only changed data
-      // Optionally, you can update the userData state with the response from the server.
       setUserData(data);
-      setUpdateFailed(false); // Reset update failure state on success
     } catch (error) {
       console.error('Error updating user data:', error);
-      setUpdateFailed(true); // Set update failure state on failure
     }
+    setUpdateFailed(false);
   };
-
-  // Disable the "Save" button when the updateFailed state is true
-  useEffect(() => {
-    if (updateFailed) {
-      document.getElementById('save-button').disabled = true;
-    } else {
-      document.getElementById('save-button').disabled = false;
-    }
-  }, [updateFailed]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -82,7 +93,7 @@ const UserSettings = ({ user, isLoading }) => {
           <AddressForm userData={userData} setAllFields={setAllFields} />
           <CommunicationForm userData={userData} setAllFields={setAllFields} />
           <Grid item xs={12}>
-            <Button
+          <Button
               id="save-button"
               variant="contained"
               color="primary"

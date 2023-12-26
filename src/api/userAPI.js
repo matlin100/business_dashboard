@@ -26,8 +26,9 @@ async function updateUser(token, data) {
         Authorization: `Bearer ${token}`,
       },
     });
-
+    console.log(response)
     if (response.status === 200) {
+
       return response.data;
     } else {
       throw new Error('Failed to update user data');
