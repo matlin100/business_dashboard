@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
-import Settings from '../Settings/Settings'; // Adjust the path as necessary
+import UserSettings from '../Settings//UserSettings'; // Adjust the path as necessary
 import Graphs from '../Graphs/Graphs';   // Adjust the path as necessary
 import UserData from '../Data/Data';       // Adjust the path as necessary
 import UserCards from '../Data/UserCards'
@@ -48,7 +48,7 @@ function Dashboard({ userLoggedIn }) {
       {/* Settings Component */}
       <section>
         <Typography variant="h4" gutterBottom>Settings</Typography>
-        <Settings />
+        <UserSettings user={userData?.user} isLoading={isLoading} />
       </section>
 
       {/* Graphs Component */}

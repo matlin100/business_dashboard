@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function fetchUserData(token) {
   try {
-    const response = await axios.get('http://localhost:3000/auth/user', {
+    const response = await axios.get('https://clientmanagementserver.azurewebsites.net/auth/user', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -18,6 +18,27 @@ async function fetchUserData(token) {
   }
 }
 
+
+async function updateUser(token, data) {
+  try {
+    const response = await axios.put('https://clientmanagementserver.azurewebsites.net/auth/user', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Failed to update user data');
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 export default {
   fetchUserData,
+  updateUser
 };
