@@ -97,6 +97,21 @@ const AddressForm = ({ userData, setAllFields }) => {
           valueLabelDisplay="auto"
         />
       </Grid>
+      <Grid item xs={12} sm={6}>
+        <div className="user-data-field">
+          <Typography variant="h6">Satisfaction</Typography>
+          <Slider
+            value={userData.satisfaction}
+            onChange={(e, value) =>
+              setAllFields('satisfaction', value)
+            }
+            min={0}
+            max={10}
+            step={1}
+            valueLabelDisplay="auto"
+          />
+        </div>
+      </Grid>
       {/* Additional address fields */}
       <style>
         {`

@@ -39,6 +39,16 @@ const UserSettings = ({ user, isLoading }) => {
       category: '',
       content: '',
     },
+    sendEmaile: [{
+      date: Date,
+      customerName: [String],
+      email: [String],
+      urgency: Number,
+      importance: Number,
+      customerSatisfaction: Number,
+      customerStrength: Number,
+      hour: String
+  }],
   });
 
   const [changedData, setChangedData] = useState({});
@@ -57,19 +67,23 @@ const UserSettings = ({ user, isLoading }) => {
     }));
   };
 
+  
+  
   const handleSubmit = async (e) => {
     setUpdateFailed(true);
     e.preventDefault();
     try {
+      setUpdateFailed(true);
       const token = localStorage.getItem('token');
       if (!token) {
         console.log('Token does not exist');
         return;
       }
       const data = await userAPI.updateUser(token, changedData); // Send only changed data
-      setUserData(data);
+      await setUserData(data);
     } catch (error) {
       console.error('Error updating user data:', error);
+      setUpdateFailed(false);
     }
     setUpdateFailed(false);
   };

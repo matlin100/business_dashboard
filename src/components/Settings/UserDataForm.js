@@ -113,7 +113,7 @@ const UserDataForm = ({ userData, setAllFields }) => {
           />
         </div>
       </Grid>
-      {/* Additional user data fields */}
+
       <style>
         {`
           .user-data-field {
