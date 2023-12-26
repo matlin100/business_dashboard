@@ -33,12 +33,20 @@ const calculateAverages = (chats) => {
   };
 };
 
-const UserCards = ({ customerDetails }) => {
+const UserCards = ({ customerDetails ,isLoading }) => {
   const [expandedId, setExpandedId] = useState(null);
 
   const handleExpandClick = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!customerDetails || customerDetails.length === 0) {
+    return <div>No customer data available</div>;
+  }
 
   return (
     <Grid container spacing={2}>
@@ -47,50 +55,51 @@ const UserCards = ({ customerDetails }) => {
         return (
           <Grid item xs={12} sm={6} md={4} key={customer._id}>
             <Card>
-            <CardContent>
-                <Typography variant="h5">{customer.name}</Typography>
+              <CardContent>
+              <Box display="flex" alignItems="center">
+                <Typography variant="h5" style={{ marginRight: '90px' }}>{customer.name}</Typography>
                 <Typography variant="caption">
-                  <DateRangeIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: 5 }} />
-                  {new Date(customer.date).toLocaleString()}
+                    <DateRangeIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+                    {new Date(customer.date).toLocaleString()}
                 </Typography>
+                </Box>
                 <Typography variant="subtitle1">
                   <EmailIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: 5 }} />
                   {customer.email}
                 </Typography>
                 <Typography variant="body2">{customer.somryRecommend[0]}</Typography>
 
-                // Inside the component, where icons are displayed
                 <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <SpeedIcon fontSize="small" />
                     <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Urgent</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.urgency.toFixed(1)}</Typography>
-                </Box>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  </Box>
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <StarRateIcon fontSize="small" />
-                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>High Priority</Typography>
+                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Priority</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.importance.toFixed(1)}</Typography>
-                </Box>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  </Box>
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <MoodIcon fontSize="small" />
-                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Low Satisfaction</Typography>
+                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Satisfaction</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.customerSatisfaction.toFixed(1)}</Typography>
-                </Box>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  </Box>
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <FitnessCenterIcon fontSize="small" />
-                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Strong Customer</Typography>
+                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>assertiveness</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.customerStrength.toFixed(1)}</Typography>
-                </Box>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  </Box>
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <ThumbUpIcon fontSize="small" />
-                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Low Satisfaction</Typography>
+                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Satisfaction</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.satisfaction.toFixed(1)}</Typography>
-                </Box>
-                <Box display="flex" flexDirection="column" alignItems="center">
+                  </Box>
+                  <Box display="flex" flexDirection="column" alignItems="center">
                     <EmojiEmotionsIcon fontSize="small" />
-                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Moderately Friendly</Typography>
+                    <Typography variant="caption" style={{ fontSize: 'xx-small' }}>Friendly</Typography>
                     <Typography variant="body2" style={{ marginLeft: 5 }}>{averages.friendly.toFixed(1)}</Typography>
-                </Box>
+                  </Box>
                 </Box>
 
                 <Button 
@@ -103,7 +112,6 @@ const UserCards = ({ customerDetails }) => {
                   <Typography paragraph>{customer.Recommend[0]}</Typography>
                 </Collapse>
               </CardContent>
-
             </Card>
           </Grid>
         );

@@ -59,7 +59,7 @@ function Dashboard({ userLoggedIn }) {
 
       <section>
         <Typography variant="h4" gutterBottom>User Details</Typography>
-        <UserCards customerDetails={userData?.customerDetails} />
+        <UserCards customerDetails={userData?.customerDetails} isLoading={isLoading}/>
       </section>
 
       {/* Data Component */}
